@@ -124,11 +124,11 @@ static VALUE Lorcon_create(int argc, VALUE *argv, VALUE self) {
 
 	if (argc == 2) {
 		rb_scan_args(argc, argv, "2", &rbintf, &rbdriver);
-		intf = STR2CSTR(rbintf);
-		driver = STR2CSTR(rbdriver);
+		intf = StringValuePtr(rbintf);
+		driver = StringValuePtr(rbdriver);
 	} else {
 		rb_scan_args(argc, argv, "1", &rbintf);
-		intf = STR2CSTR(rbintf);
+		intf = StringValuePtr(rbintf);
 	}
 
 	if (driver == NULL) {
@@ -366,7 +366,7 @@ static VALUE Lorcon_packet_prepdot3(VALUE self, VALUE dot3) {
 	Data_Get_Struct(self, struct rlpack, rlp);
 
 	rlp->dot3 = StringValuePtr(dot3);
-	rlp->len = RSTRING(dot3)->len;
+	rlp->len = RSTRING(dot3)->as.heap.len;
 
 	return dot3;
 }
